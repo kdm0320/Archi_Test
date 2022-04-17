@@ -8,33 +8,124 @@ const TopBar = styled.nav`
   height: 6vh;
   border-bottom: 1px solid;
   border-color: lightgray;
-  position: fixed;
   padding: 0%;
-  background-color: green;
+  background-color: white;
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
 `;
-const Col = styled.div``;
+const Col = styled.div`
+  width: 20%;
+  height: 100%;
+`;
 const ExitBtn = styled.button`
-  margin-right: 10%;
+  all: unset;
+  width: 4%;
+  height: 60%;
+  text-align: center;
+  font-size: 70%;
+  margin-left: 1%;
+  background-color: ${(props) => props.theme.btn.bgColor};
+  border-radius: ${(props) => props.theme.btn.borderRadius};
+  transition-duration: 0.25s;
+  margin-right: auto;
+
+  :hover {
+    background-color: #e0e0e0;
+  }
+  cursor: pointer;
 `;
 const MainExitBtn = styled.button`
-  margin-right: 10%;
+  all: unset;
+  width: 5%;
+  height: 67%;
+  text-align: center;
+  font-size: 70%;
+  margin-left: 1%;
+  background-color: ${(props) => props.theme.btn.bgColor};
+  border-radius: ${(props) => props.theme.btn.borderRadius};
+  transition-duration: 0.25s;
+  :hover {
+    background-color: #e0e0e0;
+  }
+  cursor: pointer;
 `;
-const DownloadBtn = styled.button``;
-const DeleteBtn = styled(DownloadBtn)``;
+const DownLink = styled.a`
+  margin-top: 2%;
+  height: 100%;
+  width: 4%;
+`;
+const DownloadBtn = styled.button`
+  all: unset;
+  background-color: ${(props) => props.theme.btn.bgColor};
+  border-radius: ${(props) => props.theme.btn.borderRadius};
+  height: 50%;
+  font-size: 80%;
+  color: black;
+  text-align: center;
+  margin-top: 10%;
+  transition-duration: 0.25s;
+  :hover {
+    background-color: #e0e0e0;
+  }
+  cursor: pointer;
+`;
+const DeleteBtn = styled.button`
+  all: unset;
+  background-color: ${(props) => props.theme.btn.bgColor};
+  border-radius: ${(props) => props.theme.btn.borderRadius};
+  font-size: 80%;
+  width: 5%;
+  height: 45%;
+  text-align: center;
+  margin-right: 7%;
+  margin-left: 4%;
+  cursor: pointer;
+`;
 const DeleteBack = styled.div`
-  width: 100vw;
+  display: flex;
+  position: fixed;
   height: 100vh;
-  background-color: black;
+  padding-bottom: 1%;
+
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  align-items: center;
+  justify-content: center;
 `;
 const CheckDelete = styled.div`
-  width: 50%;
-  height: 50%;
-  background-color: red;
+  width: 33%;
+  height: 55%;
+  border-radius: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  h1 {
+    margin-top: 10%;
+    font-weight: bolder;
+    font-size: 200%;
+  }
+  h3 {
+    margin-top: 25%;
+    font-size: 120%;
+    color: darkgray;
+    margin-bottom: 25%;
+  }
 `;
-const ChooseBtn = styled.button``;
+const ChooseBtn = styled.button`
+  all: unset;
+  margin-top: 5%;
+  width: 50%;
+  height: 10%;
+  border-radius: 4%;
+  text-align: center;
+  cursor: pointer;
+  background-color: ${(props) => props.color};
+`;
 
 function Header() {
   const [isDetailed, setIsDetailedAtom] = useRecoilState(isDetailedAtom);
@@ -43,7 +134,6 @@ function Header() {
 
   const onExitClick = () => {
     setIsDetailedAtom((prev) => !prev);
-    document.body.style.overflow = "unset";
   };
   const [onDelete, setOnDelete] = useState(false);
 
@@ -56,8 +146,20 @@ function Header() {
       {onDelete ? (
         <DeleteBack>
           <CheckDelete>
-            <ChooseBtn onClick={onClickDelete}>Delete</ChooseBtn>
-            <ChooseBtn onClick={() => setOnDelete((prev) => !prev)}>
+            <h1>Confirm To Delete</h1>
+            <h3>Are you sure you want to delete this image?</h3>
+            <ChooseBtn
+              color="#6db2c5"
+              style={{ color: "white" }}
+              onClick={onClickDelete}
+            >
+              Delete
+            </ChooseBtn>
+            <ChooseBtn
+              color="white"
+              style={{ color: "#6db2c5" }}
+              onClick={() => setOnDelete((prev) => !prev)}
+            >
               return
             </ChooseBtn>
           </CheckDelete>
@@ -67,14 +169,21 @@ function Header() {
         {isDetailed ? (
           <>
             <ExitBtn onClick={onExitClick}>❌</ExitBtn>
-            <Col>
-              <a href={chosenImg.url} download>
-                <DownloadBtn>Download</DownloadBtn>
-              </a>
-              <DeleteBtn onClick={() => setOnDelete((prev) => !prev)}>
-                Delete
-              </DeleteBtn>
-            </Col>
+            <DownLink
+              href={chosenImg.url}
+              style={{ textDecoration: "none" }}
+              download
+            >
+              <DownloadBtn>Download</DownloadBtn>
+            </DownLink>
+            <DeleteBtn
+              onClick={() => {
+                setOnDelete((prev) => !prev);
+                document.body.style.overflow = "hidden";
+              }}
+            >
+              Delete
+            </DeleteBtn>
           </>
         ) : (
           <MainExitBtn>❌</MainExitBtn>

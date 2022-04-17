@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import App from "./App";
+import { btnTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -61,7 +62,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <RecoilRoot>
     <GlobalStyle />
-    <App />
+    <ThemeProvider theme={btnTheme}>
+      <App />
+    </ThemeProvider>
   </RecoilRoot>
 );
 
