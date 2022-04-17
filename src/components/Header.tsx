@@ -14,10 +14,7 @@ const TopBar = styled.nav`
 
   align-items: center;
 `;
-const Col = styled.div`
-  width: 20%;
-  height: 100%;
-`;
+
 const ExitBtn = styled.button`
   all: unset;
   width: 4%;
@@ -54,6 +51,7 @@ const DownLink = styled.a`
   margin-top: 2%;
   height: 100%;
   width: 4%;
+  margin-bottom: 0.5%;
 `;
 const DownloadBtn = styled.button`
   all: unset;
@@ -158,7 +156,10 @@ function Header() {
             <ChooseBtn
               color="white"
               style={{ color: "#6db2c5" }}
-              onClick={() => setOnDelete((prev) => !prev)}
+              onClick={() => {
+                setOnDelete((prev) => !prev);
+                document.body.style.overflow = "unset";
+              }}
             >
               return
             </ChooseBtn>
