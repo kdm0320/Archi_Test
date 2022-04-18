@@ -105,6 +105,7 @@ function App() {
   };
 
   const RenderData = () => {
+    // 갤러리 이미지들 렌더링 함수
     return (
       <PhotoWrapper>
         {datas.map((data, index) => {
